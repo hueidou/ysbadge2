@@ -1,7 +1,7 @@
 # APK 功能与实现深入分析
 
 包名 com.app.myapplication（白标 YSBadge 电子徽章/双面墨水屏控制器）
-产物：base.apk，4 个 dex（multidex），反编译约 9700 个类。协议层 7 个文件的反编译源码随仓库分发（reference/apk/apk_src/sources/com/app/ysbadge/，docs 引用的原始证据）；完整反编译树（约 9700 类，多数为无关第三方库）按 reference/apk/README.md 的方法自行生成。
+产物：base.apk，4 个 dex（multidex），反编译约 9700 个类。协议层 8 个文件的反编译源码随仓库分发（`reference/apk/ysbadge/`，docs 引用的原始证据；其中 BluetoothTool.java 来自 com.app.myapplication.tool 包）；完整反编译树（约 9700 类，多数为无关第三方库）按 reference/apk/README.md 的方法自行生成。
 
 ## 0. 定位
 绑定/编辑模板 → 生成 800x480 图片 → 通过 BLE（或 NFC）投到双面七色墨水屏设备；

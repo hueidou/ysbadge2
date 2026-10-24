@@ -1,6 +1,6 @@
 # YSBadge2 硬件识别（PCB V2.3）
 
-2026-10-21 依据实物照片识别，照片见 `analysis/hardware/`。
+2026-10-21 依据实物照片识别，照片见 `docs/images/hardware/`。
 
 > 说明：两张照片是**同一面（元件面）的左右两段**，在电源区（D10 / 150 / 3R3 / Q3）重叠，不是正反面。
 
@@ -113,11 +113,11 @@ CH340C 是 USB↔UART 桥，**没有 SWD 时序能力，不能用来读 flash**�
 
 | 文件 | 内容 |
 |---|---|
-| `analysis/hardware/board_area1_mcu.jpg` | 区域一：U1(MCU)、调试焊盘、BOOT/RESET、NFC 座 |
-| `analysis/hardware/board_area2_epd.jpg` | 区域二：A面 FPC 座、PWR 电池座、电源区、V2.3 |
-| `analysis/hardware/u1_chip.png` | U1 丝印特写（PHY6220） |
-| `analysis/hardware/debug_pads.png` | 6 个调试焊盘丝印特写 |
-| `analysis/hardware/nfc_area.png` | NFC 天线座与走线 |
+| `docs/images/hardware/board_area1_mcu.jpg` | 区域一：U1(MCU)、调试焊盘、BOOT/RESET、NFC 座 |
+| `docs/images/hardware/board_area2_epd.jpg` | 区域二：A面 FPC 座、PWR 电池座、电源区、V2.3 |
+| `docs/images/hardware/u1_chip.png` | U1 丝印特写（PHY6220） |
+| `docs/images/hardware/debug_pads.png` | 6 个调试焊盘丝印特写 |
+| `docs/images/hardware/nfc_area.png` | NFC 天线座与走线 |
 
 ## 7. 屏体识别：GDEY073D46（2026-10-23 调研，推断，待实物确认）
 

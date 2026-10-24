@@ -1,0 +1,3 @@
+# YSBadge2 投图工具依赖（开发机实测：bleak 3.0.2 / Pillow 12.2.0，Python 3.14）
+bleak>=0.21      # BLE 通信（epd_send.py 实机发送；网页版不需要）
+Pillow>=10.0     # 图像处理（编码/量化/打包）

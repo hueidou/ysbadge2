@@ -111,7 +111,7 @@ UPDATE    [03, 00]                  可选项，BLE 官方 App 不发
 | `README.md` | 面向使用者的总结与 CLI 参数表 |
 | `reference/apk/README.md` | 官方 APK 原件的说明与再反编译方法（反编译源码不进公开仓库，原因见该文件） |
 | `_verify/INDEX.md` | 每个实验脚本的用途、证据归属、已知失效点 |
-| `reference/apk/apk_src/sources/com/app/ysbadge/` | 协议层反编译源码 7 个文件，docs 各处引用的原始证据（完整反编译树见 reference/apk/README.md） |
+| `reference/apk/ysbadge/` | 协议层反编译源码 8 个文件（含 myapplication.tool 包的 BluetoothTool.java），docs 各处引用的原始证据；完整反编译树见 reference/apk/README.md |
 | `web/index.html`、`web/ysbadge-core.js` | 网页版投图台（纯前端 Web Bluetooth）。协议层在 ysbadge-core.js，与 epd_send.py 逐字节一致，**改它必须跑 `_verify/check_web_core.py`** |
 
 ## 工作约定
@@ -127,5 +127,5 @@ UPDATE    [03, 00]                  可选项，BLE 官方 App 不发
 脚本路径从自身位置推导（`_ROOT` / `_VD`），不要写绝对路径；新增内容才分类归档。
 - **PIC_INFO 的 len 语义（2026-10-21 实机确认）**：compress_type=1 时填**压缩后比特数**，
   compress_type=0 时填原始字节数。证据：网页版曾按字节数声明，屏幕无变化且设备失联需断电重启；
-  按比特数声明（`_verify/send_probe.py`、`ab_marker.py`）均正常刷新。`epd_send.py` 与网页版
+  按比特数声明（`_verify/send_probe.py`、`_verify/ab_marker.py`）均正常刷新。`epd_send.py` 与网页版
   现均已按比特数；这段曾是仓库里的待核对项，现在是结论，不要再改回字节数。

@@ -59,6 +59,8 @@ epd_index：1=屏A，2=屏B，3=A&B同显，7=A&B异显（拼接两图）。
 
 BLE 走浏览器 **Web Bluetooth**，不需要 Python、不需要起服务：
 
+![网页版投图台](docs/images/web-tool.png)
+
 - 点「扫描/选择设备」弹出系统选择框（按名字前缀 YSBadge 或 ff01 服务过滤）；
   首次配对后「重连已授权」可直连，不必再走弹窗——用来应对桌牌唤醒后广播窗口短的问题。
 - 每个 CLI 参数都有对应控件，另加这些 CLI 没有的操作：
@@ -113,6 +115,10 @@ A/B 设置友好化（index 7 自动展开 B 面区并写明继承关系、一�
 unsharp 的盒式模糊由 3×Float64 全通道重写为 2×Float32 仅 RGB（约 37MB → 9MB 临时内存），预览渲染改 Uint32Array 整像素写入。
 2026-10-23 晚追加人工裁剪（A/B 面独立，含比例锁定与激活标记）后复跑仍全过。
 
+出图示例（`_verify/gen_weather.py` 生成，7 色扁平设计，84,577 bit 已实机上屏 B 面）：
+
+![天气卡示例](docs/images/weather-example.png)
+
 ## 小字优化经验
 - 等比缩小时小字易糊（源图大于 800x480 会被缩小）
 - 源宽正好 800 时：等比=不缩但要裁切；拉伸=不裁但纵向压缩
@@ -154,16 +160,15 @@ unsharp 的盒式模糊由 3×Float64 全通道重写为 2×Float32 仅 RGB（�
     tools/                    BLE 辅助脚本（scan_ble.py 扫描、gatt_dump.py 枚举、watch_ble.py 观察广播）
     reference/                参考材料
       apk/base.apk           官方 APK 原件（53M，不可再生）
-      apk/apk_src/sources/com/app/ysbadge/   协议层反编译源码 7 个文件（docs 引用的原始证据）
+      apk/ysbadge/           协议层反编译源码 8 个文件（docs 引用的原始证据）
       apk/README.md          再反编译方法与收录范围说明
     _verify/                  硬件实验脚本 + 自动化校验（check_web_core / check_web_page /
                             browser_check / send_probe；脚本用途见 _verify/INDEX.md）
-    analysis/hardware/        PCB 识别照片（HARDWARE.md 的实物证据）
+    docs/images/              README 截图与硬件照片（web-tool / weather-example / hardware/）
 
 ## 未决 / 注意
 - 32KB 上限为实测推断（成功 <= 32024B，失败 >= 39186B），未做精确二值标定。
 - compress_type=0 未压缩通道**已关闭**：2026-10-21 本机 7 组对照实测不刷新且会卡死 GATT，
   不再是待验项（docs/LESSONS.md §1）。
-- analysis 内脚本含绝对路径且部分已失效（路径过期、androguard 未装），仅历史存档，不影响主工具。
 - `_verify/check_fixes.py` 的 EXIF 断言不稳定：JPEG 有损压缩会在文字边缘翻转最近色判定，
   与 `epd_send.py` 的 EXIF 处理无关（转正本身正常），断言待改成结构检查。

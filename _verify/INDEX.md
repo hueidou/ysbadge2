@@ -12,6 +12,7 @@ fixture：`test_pattern.png` 与 `marker.png` 是**固定 fixture，已入库**�
 | 文档 | 内容 |
 | --- | --- |
 | `PLAN_32KB_BLE.md` | **BLE 路径突破 32KB 上限的安全预案**：目标判据、已知/未知清单、6 步单变量阶梯、观测手段、中止条件、断电恢复 SOP、记录模板。风险等级高（最坏后果为设备失联需断电重启），执行前须满足其 §3 全部前置条件，并由人工全程确认屏幕状态 |
+| `LOG_32KB_BLE.md` | 32KB 突破实验日志：Step 0-3 已执行（基线 / 空探 0xA0 / 空探 0xA1 / 投图后补 A0），含 ff04 帧型记录与消歧实验；A0 触发刷新的结论已降级为待验（依赖目视观测） | PLAN_32KB_BLE.md 的执行记录 |
 
 ## 1. 无硬件自检（可随时跑）
 
@@ -47,8 +48,9 @@ fixture：`test_pattern.png` 与 `marker.png` 是**固定 fixture，已入库**�
 | `verify_nocompress.py` | 未压缩通道完整验证（787 包全流程 + 通知时间戳） | docs/LESSONS.md §1 表 3-7 行 |
 | `watch_and_send.py` | 盯广播，设备一出现就连并发（应对短广播窗口） | — |
 | `burst.py` | 连续 6 次连接发送，验证第二张被吞 | README 约束 4（间隔约 30s） |
-| `ff04_calib.py` | 系统性触发各种情形并记录 ff04 回执帧 | docs/PROTOCOL.md §8 |
 | `send_probe.py` | 实机发送探针：复刻 ab_marker 已验证路径（PIC_INFO 声明**比特数**、244B/40ms），全程记录 ff04 通知时间戳，发完保持 20s 不断连。传第三参图B 时走 index 7 双面异显。2026-10-21 实测：单面正常刷新（确认 len 比特数口径）、index 7 两面分别正确显示（确认异显可用） | docs/PROTOCOL.md §2 / index 7 实机确认段 |
+| `probe_cmd.py` | 单帧探针：向 ff03 写一条命令、记录 ff04 响应后干净断开——安全试探未知命令（0xA0/0xA1 就是这么探的） | PLAN_32KB_BLE.md Step 1-3 |
+| `diag_gatt.py` | 重复只读枚举 GATT，诊断 ff01 服务消失/设备假死；2026-10-21 靠它确认 RESET 键（非拔电池）可恢复 | docs/HARDWARE.md §6 |
 | `gen_sides.py` | 生成双面异显测试图 sideA.png（红条大字 A）/ sideB.png（蓝条大字 B） | index 7 实机验证的输入 |
 | `gen_demo.py` | 生成两张**体现屏幕特点**的演示图：A 面 7 色能力图（7 色块 + 文字对比度 + 限制演示区：渐变/细灰线/小字）、B 面姓名标签实例（IMAGE_PROCESSING.md §9 版式，名字取 ff04 读口返回的 Jack Wang）。只用 7 个精确调色板色、纯色块、高对比大字 | 2026-10-21 以 index 7 双面异显实机发送，两面均正常显示 |
 | `gen_weather.py` | 生成「北京今日天气」800×480 上屏卡片（屏幕 B 面）：扁平色块 + 大字 + 几何图标，只用 7 色palette、无抖动，脚本内置 2026-10-23 三源天气数据与自检（量化→打包→压缩，须 ≤262144 bit）。产物 `_verify/weather_bj_20261023.png`（gitignore，可再生）。已实机发送 index 2：10,573 B / 84,577 bit | 按天改数据重跑即可更新 B 面 |
@@ -65,4 +67,4 @@ fixture：`test_pattern.png` 与 `marker.png` 是**固定 fixture，已入库**�
 - 这里的实验都**真的会连设备**。跑之前确认设备已从上次的掉线状态断电重启过
   （危险输入见 CODEBUDDY.md「危险输入」一节）。
 - 2026-10-21 清理：删掉 5 个早期 `diag_*.py` 连接诊断、`scan.py`（被 `tools/scan_ble.py` 取代）、
-  `check_exif.py`（被 `check_fixes.py` 覆盖）——结论都已进 docs/，需要可 `git show` 取回。
+  `check_exif.py`（被 `check_fixes.py` 覆盖）、`ff04_calib.py`（结论已进 docs/PROTOCOL.md §8）——结论都已进 docs/。

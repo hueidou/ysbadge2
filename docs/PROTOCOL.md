@@ -26,7 +26,7 @@ len 字段的含义由 compress_type 决定，两者不可混用：
 | 0 | 原始字节数 | 192000（0x0002EE00） |
 | 1 | 压缩后比特数 | 约 250432 |
 
-依据：reference/apk/apk_src/sources/com/app/ysbadge/EPD_Config.java:71-77 的 get_EPD_CMD_SEND_PIC_INFO（crc_enable=false 分支，
+依据：reference/apk/ysbadge/EPD_Config.java:71-77 的 get_EPD_CMD_SEND_PIC_INFO（crc_enable=false 分支，
 帧固定为 {1, compress_type, len0..len3}）；BluetoothTool.java:41-47 在 compress_type==0 时传
 pic_data.length、==1 时传 LZ77 比特数；Dalvik 模拟器输出 INIT(type6,index1) = 00 06 01。
 
