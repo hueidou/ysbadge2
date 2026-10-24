@@ -1,0 +1,27 @@
+# ---- Python 运行时产物 ----
+__pycache__/
+*.pyc
+
+# ---- _verify 实验图片：fixture 与输出，由 gen_*.py / check_*.py 再生 ----
+_verify/*.png
+!_verify/test_pattern.png
+!_verify/marker.png
+_verify/*.jpg
+
+# ---- browser_check.js 的 headless 浏览器 profile（可再生） ----
+_verify/_browser_profile/
+_verify/_bp*/
+
+# ---- 临时脚本/提交信息 ----
+_verify/_commit_msg.txt
+_verify/_build*.py
+_verify/_edit_*
+_verify/_fix_*
+_verify/_patch_*
+_verify/_probe*
+
+# ---- 其他 ----
+*.log
+Thumbs.db
+desktop.ini
+.DS_Store
