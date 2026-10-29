@@ -53,7 +53,8 @@ fixture：`test_pattern.png` 与 `marker.png` 是**固定 fixture，已入库**�
 | `diag_gatt.py` | 重复只读枚举 GATT，诊断 ff01 服务消失/设备假死；2026-10-21 靠它确认 RESET 键（非拔电池）可恢复 | docs/HARDWARE.md §6 |
 | `gen_sides.py` | 生成双面异显测试图 sideA.png（红条大字 A）/ sideB.png（蓝条大字 B） | index 7 实机验证的输入 |
 | `gen_demo.py` | 生成两张**体现屏幕特点**的演示图：A 面 7 色能力图（7 色块 + 文字对比度 + 限制演示区：渐变/细灰线/小字）、B 面姓名标签实例（IMAGE_PROCESSING.md §9 版式，名字取 ff04 读口返回的 Jack Wang）。只用 7 个精确调色板色、纯色块、高对比大字 | 2026-10-21 以 index 7 双面异显实机发送，两面均正常显示 |
-| `gen_weather.py` | 生成「北京今日天气」800×480 上屏卡片（屏幕 B 面）：扁平色块 + 大字 + 几何图标，只用 7 色palette、无抖动，脚本内置 2026-10-23 三源天气数据与自检（量化→打包→压缩，须 ≤262144 bit）。产物 `_verify/weather_bj_20261023.png`（gitignore，可再生）。已实机发送 index 2：10,573 B / 84,577 bit | 按天改数据重跑即可更新 B 面 |
+| `gen_weather.py` | 生成「北京今日天气」800×480 上屏卡片（屏幕 B 面）：扁平色块 + 大字 + 几何图标，只用 7 色palette、无抖动，脚本内置 2026-10-23 三源天气数据与自检（量化→打包→压缩，须 ≤262144 bit）。产物 `_verify/weather_bj_20261023.png`（gitignore，可再生）。已实机发送 index 2：10,573 B / 84,577 bit | 按天改数据重跑即可更新 B 面 |（README 示例图已改用 `_verify/host/make_weather_example.py`，与固件同一套渲染器）
+| `host/make_weather_example.py` | 调 host.exe 的 preview 出 README 的 800x480 天气卡示例，渲染器就是固件那份 C++（ui/canvas/icons/font），图和屏上完全一致 | 需先编译 host.exe；样例固定北京 9 度/晴 |
 
 ## 4. 已知失效点 / 注意事项
 

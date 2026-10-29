@@ -19,11 +19,12 @@ static void sample(int code, int temp) {
   Weather w;
   memset(&w, 0, sizeof w);
   w.valid = true;
+  // 与 2026-10-29 实机抓到的那一版一致（北京 9 度、晴、今日 6~18、明天小雨 8~15）
   w.y = 2026; w.mo = 10; w.d = 29; w.dow = 4; w.hh = 6; w.mi = 0;
-  strcpy(w.city, "上海");
-  w.temp = temp; w.feels = temp - 1; w.code = code;
-  w.hum = 68; w.wind = 12; w.pop = 30;
-  w.tmax = temp + 3; w.tmin = temp - 6;
+  strcpy(w.city, "北京");
+  w.temp = temp; w.feels = temp - 2; w.code = code;
+  w.hum = 69; w.wind = 3; w.pop = 0;
+  w.tmax = 18; w.tmin = 6;
   w.code2 = 61; w.tmax2 = 15; w.tmin2 = 8;
   ui_begin(w);
 }

@@ -115,7 +115,7 @@ A/B 设置友好化（index 7 自动展开 B 面区并写明继承关系、一�
 unsharp 的盒式模糊由 3×Float64 全通道重写为 2×Float32 仅 RGB（约 37MB → 9MB 临时内存），预览渲染改 Uint32Array 整像素写入。
 2026-10-23 晚追加人工裁剪（A/B 面独立，含比例锁定与激活标记）后复跑仍全过。
 
-出图示例（`_verify/gen_weather.py` 生成，7 色扁平设计，84,577 bit 已实机上屏 B 面）：
+出图示例（与 ESP32 固件同一套 C++ 渲染器，`_verify/host/make_weather_example.py` 生成；北京 9° 晴，87,922 bit = 10,991 B，实机投到 A 面）：
 
 ![天气卡示例](docs/images/weather-example.png)
 
