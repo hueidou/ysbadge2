@@ -20,8 +20,28 @@ _verify/_fix_*
 _verify/_patch_*
 _verify/_probe*
 
+# ---- ESP32 工具链（本机 arduino-cli / mingw，不入库） ----
+.toolchain/
+firmware/*/build/
+firmware/*/*.bin
+firmware/*/*.elf
+
+# ---- 本机凭据（WiFi 密码等） ----
+firmware/weather_badge/secrets.h
+
+# ---- 本机验证产物 ----
+_verify/host/*.exe
+_verify/host/*.ppm
+_verify/host/*.png
+_verify/host/*.lz
+_verify/host/*.raw
+_verify/host/_frame.inc
+_verify/_c3_bootlog.bin
+*_probe*.bin
+
 # ---- 其他 ----
 *.log
 Thumbs.db
 desktop.ini
 .DS_Store
+

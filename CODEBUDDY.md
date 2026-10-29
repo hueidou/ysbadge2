@@ -44,6 +44,12 @@ python _verify/check_web_page.py   # 页面语法、模块加载、id 核对 + D
 
 # 真实浏览器验证（需本机 Edge/Chrome；先起带调试端口的 headless 实例再跑）
 node _verify/browser_check.js 9333
+
+# ESP32 定时投图（firmware/weather_badge，合宙 AirM2M CORE-ESP32C3）
+# 板型必须是 AirM2M_CORE_ESP32C3；用通用 esp32c3 会无限重启并报 partition table error
+./.toolchain/arduino-cli.exe compile --fqbn esp32:esp32:AirM2M_CORE_ESP32C3     --board-options PartitionScheme=huge_app --output-dir firmware/weather_badge/build firmware/weather_badge
+python _verify/check_lz77_port.py        # C++ 压缩流 vs Python 解压器，逐字节往返
+python _verify/c3_bootlog.py 40 115200   # 复位并抓 40s 串口日志
 ```
 
 **没有独立测试框架**：`epd_send.py` 启动时无条件调用 `selftest()`，对 `compress()`/`decompress()`
@@ -106,6 +112,7 @@ UPDATE    [03, 00]                  可选项，BLE 官方 App 不发
 | `docs/IMAGE_PROCESSING.md` | 7 色出图工艺：尺寸策略、按内容选抖动、PIL 快路径、体积实测、HTML 截图参数 |
 | `docs/LESSONS.md` | 参考项目的对照实验。证据分级（源码/他机/本机/待验），未压缩通道关闭的依据在 §1 |
 | `docs/REFERENCE_EPDIY.md` | 另两个参考项目（vroland/epdiy、tsl0922 蓝牙墨水屏日历）的对照。全为他机/源码级，无本机实测；产出 2 个待验方向（时间同步命令、驱动 IC 识别） |
+| `docs/ESP32_WEATHER.md` | ESP32-C3 定时投图：合宙 AirM2M 板型坑（用错 fqbn 必报 partition table error）、逐行生成 + 流式压缩的内存账、6:00 深睡调度、编译烧录命令、实测压缩比 |
 | `docs/APK_FEATURES.md` | 官方 APK 逆向：页面、SQLite 8 张表、投图流程、`com.app.ysbadge` 关键类索引 |
 | `docs/HARDWARE.md` | PCB V2.3 识别、6 个调试焊盘、SWD 取固件流程（只读） |
 | `README.md` | 面向使用者的总结与 CLI 参数表 |

@@ -119,6 +119,22 @@ unsharp 的盒式模糊由 3×Float64 全通道重写为 2×Float32 仅 RGB（�
 
 ![天气卡示例](docs/images/weather-example.png)
 
+## ESP32 定时投图（firmware/，每天 6:00）
+
+一块 ESP32-C3（合宙 AirM2M CORE-ESP32C3）当 BLE 中央端：每天 6:00 自己取天气、画 800x480 七色图、
+LZ77 压缩、BLE 投给胸牌，然后深睡到次日。PC 不用开机。
+
+    firmware/weather_badge/            Arduino 固件（协议层 C++ 移植 + 排版 + BLE 中央端）
+    firmware/weather_badge/config.h    改这里：WiFi/经纬度/城市/面别/时间/省电
+    firmware/weather_badge/secrets.h   WiFi 凭据（gitignore，不随仓库走）
+    tools/gen_font.py                  从系统 TTF 生成 1bpp 字模（换城市要补字后重跑）
+
+    ./.toolchain/arduino-cli.exe compile --fqbn esp32:esp32:AirM2M_CORE_ESP32C3 \
+        --board-options PartitionScheme=huge_app --output-dir firmware/weather_badge/build firmware/weather_badge
+
+板型必须选 AirM2M_CORE_ESP32C3：用通用的 esp32c3 编出来的固件会无限重启并报 `partition table error`（原因与排查过程见 docs/ESP32_WEATHER.md §1）。
+实测一张文字+图标图压缩后约 11KB（设备上限 32KB，5.8%），MTU 247 下 46~48 个包发完。
+
 ## 小字优化经验
 - 等比缩小时小字易糊（源图大于 800x480 会被缩小）
 - 源宽正好 800 时：等比=不缩但要裁切；拉伸=不裁但纵向压缩
@@ -150,6 +166,8 @@ unsharp 的盒式模糊由 3×Float64 全通道重写为 2×Float32 仅 RGB（�
     web/                      网页版投图台（纯前端 Web Bluetooth，无后端）
       index.html              页面（双击用 Chrome/Edge 打开）
       ysbadge-core.js         协议层纯函数模块，与 epd_send.py 逐字节一致
+    firmware/                  ESP32 端固件（每天 6:00 自动投天气）
+      weather_badge/           主 sketch + 协议/排版/字模/config.h
     docs/                     结论文档（协议/工艺/经验，改代码前先读）
       PROTOCOL.md             协议实测确认版（权威）
       IMAGE_PROCESSING.md     7 色出图工艺
@@ -157,6 +175,7 @@ unsharp 的盒式模糊由 3×Float64 全通道重写为 2×Float32 仅 RGB（�
       REFERENCE_EPDIY.md       epdiy 等参考项目对照（他机/源码级）
       APK_FEATURES.md         APK 功能与实现分析
       HARDWARE.md             硬件识别与取固件流程
+      ESP32_WEATHER.md        ESP32 定时投图：板型坑、内存账、调度、烧录命令
     tools/                    BLE 辅助脚本（scan_ble.py 扫描、gatt_dump.py 枚举、watch_ble.py 观察广播）
     reference/                参考材料
       apk/base.apk           官方 APK 原件（53M，不可再生）
