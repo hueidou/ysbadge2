@@ -135,6 +135,12 @@ LZ77 压缩、BLE 投给胸牌，然后深睡到次日。PC 不用开机。
 板型必须选 AirM2M_CORE_ESP32C3：用通用的 esp32c3 编出来的固件会无限重启并报 `partition table error`（原因与排查过程见 docs/ESP32_WEATHER.md §1）。
 实测一张文字+图标图压缩后约 11KB（设备上限 32KB，5.8%），MTU 247 下 46~48 个包发完。
 
+不想接 ESP32、或只想临时换一张图时，PC 端也能直接出图投图（同一套天气源，顶栏风格已对齐）：
+
+    python tools/weather.py                       # 抓北京天气 -> 出图 -> 投到 B 面
+    python tools/weather.py --index 1             # 投 A 面
+    python tools/weather.py --sample --offline    # 无网/无设备：只出图 + 打印压缩体积
+
 ## 小字优化经验
 - 等比缩小时小字易糊（源图大于 800x480 会被缩小）
 - 源宽正好 800 时：等比=不缩但要裁切；拉伸=不裁但纵向压缩

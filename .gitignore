@@ -39,6 +39,9 @@ _verify/host/_frame.inc
 _verify/_c3_bootlog.bin
 *_probe*.bin
 
+# ---- 图片/版式实验产物（AI 出图、抖动对比图，本地留存不入库） ----
+_art/
+
 # ---- 其他 ----
 *.log
 Thumbs.db
